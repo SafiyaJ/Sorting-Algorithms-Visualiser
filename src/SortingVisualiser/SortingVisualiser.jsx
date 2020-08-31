@@ -30,7 +30,6 @@ export default class SortingVisualiser extends React.Component {
         const sortedArray = sortingAlgorithms.mergeSort(this.state.array);
 
         console.log(arraysAreEqual(javaScriptSortedArray, sortedArray));
-
     }
 
     quickSort() {}
@@ -86,5 +85,7 @@ function arraysAreEqual(arrayOne, arrayTwo) {
         if (arrayOne[i] !== arrayTwo[i]) {
             return false;
         }
-    }
+    } 
+    return true;
+
 }
