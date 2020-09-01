@@ -20,6 +20,9 @@
 
 };*/
 
+
+                    /*Merge Sort*/
+
 export function getMergeSortAnimations(array) {
     const animations = [];
     if (array.length <= 1) return array;
@@ -98,3 +101,51 @@ function doMerge(
         mainArray[k++] = auxiliaryArray[j++];   
         }
     }
+
+                 /* Quick Sort*/
+
+export function getQuickSortAnimations(array) {
+    const animations = [];
+    if (array.length <= 1) return array;
+    quickSortHelper(array, 0, array.length-1, animations);
+    return animations;
+}
+
+function quickSortHelper(
+    array,
+    startIdx,
+    endIdx,
+    animations,
+    ) {
+        if (startIdx < endIdx) return;
+        let pIndex = partition(array, startIdx, endIdx);
+        quickSortHelper(array, startIdx, pIndex-1, animations);
+        quickSortHelper(array, pIndex+1, endIdx, animations);
+        }
+
+function partition(
+    array,
+    startIdx,
+    endIdx,
+    ) {
+        let pivot = array[endIdx];
+        let pIndex = array[startIdx];
+        for (let i = startIdx; i < endIdx; i++) {
+            if (array[i] < pivot) {
+                swap(array, i, pIndex);
+                pIndex++;
+            }
+        }
+        swap(array,pivot,endIdx);
+        return pIndex;
+    }
+
+function swap(
+    array,
+    a,
+    b,
+) {
+    let temp = array[a];
+    array[a]=array[b];
+    array[b]=temp;
+}
