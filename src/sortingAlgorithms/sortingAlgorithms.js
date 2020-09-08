@@ -104,137 +104,76 @@ function doMerge(
 
                  /* Quick Sort*/
 
+
+export function getQuickSortAnimations(array) {
+  const animations = [];
+  if (array.length <= 1) {
+    return array;
+  }
+  
+
+  const pivot = array[array.length-1];
+  const leftArr = [];
+  const rightArr = [];
+  for (const el of array.slice(0, array.length-1)){
+    animations.push([el, pivot]);
+    el < pivot ? leftArr.push(el) : rightArr.push(el);
+    animations.push([el, pivot]);
+  }
+  return [...getQuickSortAnimations(leftArr), pivot, ...getQuickSortAnimations(rightArr)]
+  return animations;
+}
+
 // export function getQuickSortAnimations(array) {
-//     const animations = [];
-//     if (array.length <= 1) return array;
-//     quickSortHelper(array, 0, array.length-1, animations);
-//     return animations;
+//   const animations = [];
+//   if (array.length <= 1) return array;
+//   quickSortHelper(array, 0, array.length-1, animations);
+//   return array;
+  
 // }
 
 // function quickSortHelper(
-//     array,
-//     startIdx,
-//     endIdx,
-//     animations,
-//     ) {
-//         if (startIdx < endIdx) return;
-//         let pIndex = partition(array, startIdx, endIdx);
-//         quickSortHelper(array, startIdx, pIndex-1, animations);
-//         quickSortHelper(array, pIndex+1, endIdx, animations);
+//   array,
+//   startIdx,
+//   endIdx,
+//   animations,
+//   ) {
+//       if (startIdx < endIdx) {
+//       let pIndex = partition(array, startIdx, endIdx, animations);
+//       quickSortHelper(array, startIdx, pIndex-1, animations);
+//       quickSortHelper(array, pIndex+1, endIdx, animations);
 //         }
+//       }
 
 // function partition(
-//     array,
-//     startIdx,
-//     endIdx,
-//     animations,
-//     ) {
-//         let pivot = array[endIdx];
-//         let pIndex = array[startIdx];
-//         for (let i = startIdx; i < endIdx; i++) {
-//             if (array[i] < pivot) {
-//                 swap(array, i, pIndex);
-//                 pIndex++;
-//             }
-//         }
-//         swap(array,pivot,endIdx);
-//         return pIndex;
-//     }
+//   array,
+//   startIdx,
+//   endIdx,
+//   animations,
+//   ) {
+//       let pivot = array[endIdx];
+//       let pIndex = startIdx;
+//       for (let i = startIdx; i < endIdx; i++) {
+//           if (array[i] < pivot) {
+//               animations.push([i, pIndex]);
+//               swap(array, i, pIndex);
+//               animations.push([i, pIndex]);
+//               pIndex++;
+//           }
+//       }
+//       swap(array,pivot,endIdx);
+//       return pIndex;
+//   }
+
+
 
 // function swap(
-//     array,
-//     a,
-//     b,
-//     animations,
-// ) {
-//     animations.push([a,b]);
+//   array,
+//   a,
+//   b,
+//   ) {
 //     let temp = array[a];
 //     array[a]=array[b];
 //     array[b]=temp;
-//     animations.push([a,b]);
 // }
-
-export function quicksortBasic(array) {
-    const animations = [];
-    if(array.length < 2) {
-      return array;
-    }
-  
-    var pivot = array[0];
-    var lesser = [];
-    var greater = [];
-  
-    for(var i = 1; i < array.length; i++) {
-      if(array[i] < pivot) {
-        lesser.push(array[i]);
-      } else {
-        greater.push(array[i]);
-      }
-    }
-  
-    return quicksortBasic(lesser).concat(pivot, quicksortBasic(greater));
-    return animations;
-  }
-  
-  //console.log(quicksortBasic(array.slice())); // => [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
-  
-  // swap function helper
-  function swap(array, i, j, animations) {
-    animations.push([i,j]);
-    var temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
-    animations.push([i,j]);
-  }
-  
-  // classic implementation (with Hoare or Lomuto partition scheme, you can comment either one method or the other to see the difference)
-  function quicksort(array, left, right) {
-    left = left || 0;
-    right = right || array.length - 1;
-  
-    // var pivot = partitionLomuto(array, left, right); // you can play with both partition
-    var pivot = partitionHoare(array, left, right); // you can play with both partition
-  
-    if(left < pivot - 1) {
-      quicksort(array, left, pivot - 1);
-    }
-    if(right > pivot) {
-      quicksort(array, pivot, right);
-    }
-    return array;
-  }
-  // Lomuto partition scheme, it is less efficient than the Hoare partition scheme
-  function partitionLomuto(array, left, right) {
-    var pivot = right;
-    var i = left;
-  
-    for(var j = left; j < right; j++) {
-      if(array[j] <= array[pivot]) {
-        swap(array, i , j);
-        i = i + 1;
-      }
-    }
-    swap(array, i, j);
-    return i;
-  }
-  // Hoare partition scheme, it is more efficient than the Lomuto partition scheme because it does three times fewer swaps on average
-  function partitionHoare(array, left, right) {
-    var pivot = Math.floor((left + right) / 2 );
-  
-    while(left <= right) {
-      while(array[left] < array[pivot]) {
-        left++;
-      }
-      while(array[right] > array[pivot]) {
-        right--;
-      }
-      if(left <= right) {
-        swap(array, left, right);
-        left++;
-        right--;
-      }
-    }
-    return left;
-  }
-  
 

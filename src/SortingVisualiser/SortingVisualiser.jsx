@@ -1,6 +1,7 @@
 import React from 'react';
 import {getMergeSortAnimations} from '../sortingAlgorithms/sortingAlgorithms.js';
-import {quicksortBasic} from '../sortingAlgorithms/sortingAlgorithms.js';
+import {getQuickSortAnimations} from '../sortingAlgorithms/sortingAlgorithms.js';
+// import {quicksortBasic} from '../sortingAlgorithms/sortingAlgorithms.js';
 import './SortingVisualiser.css'
 
 // Change this value for the speed of the animations.
@@ -74,11 +75,28 @@ export default class SortingVisualiser extends React.Component {
     //    };
 
     quickSort(){
-        const animations = quicksortBasic(this.state.array);
+        const animations = getQuickSortAnimations(this.state.array);
         for (let i= 0; i < animations.length; i++) {
-            animations[i].style.backgroundColor='navy';
+            const arrayBars = document.getElementsByClassName('array-bar');
+            const isColorChange = i % 3 !== 2;
+            if (isColorChange) {
+                const [barOneIdx, barTwoIdx] = animations[i];
+                const barOneStyle = arrayBars[barOneIdx].style;
+                const barTwoStyle = arrayBars[barTwoIdx].style;
+                const color = i% 3 === 0 ? 'navy' : 'pink';
+                setTimeout(() => {
+                    barOneStyle.backgroundColor = color;
+                    barTwoStyle.backgroundColor = color; 
+                }, i * ANIMATION_SPEED_MS);
+            } else {
+                setTimeout(() => {
+                    const [barOneIdx, newHeight] = animations[i];
+                    const barOneStyle = arrayBars[barOneIdx].style;
+                    barOneStyle.height = `${newHeight}px`;
+                }, i * ANIMATION_SPEED_MS);
+            }
         }
-    }
+     }
     
 
     heapSort() {}
@@ -98,13 +116,18 @@ export default class SortingVisualiser extends React.Component {
         // }
 
         
+            // const array= [2,4,2,5,8,5,2,5,8,4,2,15,78,4,27];
+            // // console.log(array);
+            // // console.log(quicksortBasic(array));
+            // let javaScriptSort=array.sort();
+            // // return javaScriptSort === quicksortBasic(array);
+            // // console.log(javaScriptSort);
+            // console.log(getQuickSortAnimations(array));
             const array= [2,4,2,5,8,5,2,5,8,4,2,15,78,4,27];
-            // console.log(array);
-            // console.log(quicksortBasic(array));
-            let javaScriptSort=array.sort();
-            // return javaScriptSort === quicksortBasic(array);
-            // console.log(javaScriptSort);
-            console.log(quicksortBasic(array));
+            console.log(array)
+            const javaScriptSortedArray = array.slice().sort((a,b) => a-b);
+            console.log(javaScriptSortedArray);
+            console.log(getQuickSortAnimations(array));
 
     }
     
