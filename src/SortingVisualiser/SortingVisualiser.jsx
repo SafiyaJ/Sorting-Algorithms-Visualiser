@@ -54,7 +54,27 @@ export default class SortingVisualiser extends React.Component {
                 }, i * ANIMATION_SPEED_MS);
             }
         }
+    
     }
+
+    quickSort() {
+        const animations = getQuickSortAnimations(this.state.array);
+        for (let i = 0; i < animations.length; i++) {
+            const isColorChange = animations[i][0] === "comparision1" || animations[i][0] === "comparision2";
+            const arrayBars = document.getElementsByClassName('array-bar');
+            if(isColorChange === true) {
+                const color = (animations[i][0] === "comparision1") ? 'navy' : 'pink';
+                const [comparision, barOneIndex, barTwoIndex] = animations[i];
+                const barOneStyle = arrayBars[barOneIndex].style;
+                const barTwoStyle = arrayBars[barTwoIndex].style;
+                setTimeout(() => {
+                    barOneStyle.backgroundColor = color;
+                    barTwoStyle.backgroundColor = color;
+                },i * ANIMATION_SPEED_MS);
+            }
+        }
+    }
+    
 
     // quickSort() {
     //    const animations = getQuickSortAnimations(this.state.array);
@@ -74,29 +94,29 @@ export default class SortingVisualiser extends React.Component {
     
     //    };
 
-    quickSort(){
-        const animations = getQuickSortAnimations(this.state.array);
-        for (let i= 0; i < animations.length; i++) {
-            const arrayBars = document.getElementsByClassName('array-bar');
-            const isColorChange = i % 3 !== 2;
-            if (isColorChange) {
-                const [barOneIdx, barTwoIdx] = animations[i];
-                const barOneStyle = arrayBars[barOneIdx].style;
-                const barTwoStyle = arrayBars[barTwoIdx].style;
-                const color = i% 3 === 0 ? 'navy' : 'pink';
-                setTimeout(() => {
-                    barOneStyle.backgroundColor = color;
-                    barTwoStyle.backgroundColor = color; 
-                }, i * ANIMATION_SPEED_MS);
-            } else {
-                setTimeout(() => {
-                    const [barOneIdx, newHeight] = animations[i];
-                    const barOneStyle = arrayBars[barOneIdx].style;
-                    barOneStyle.height = `${newHeight}px`;
-                }, i * ANIMATION_SPEED_MS);
-            }
-        }
-     }
+    // quickSort(){
+    //     const animations = getQuickSortAnimations(this.state.array);
+    //     for (let i= 0; i < animations.length; i++) {
+    //         const arrayBars = document.getElementsByClassName('array-bar');
+    //         const isColorChange = i % 3 !== 2;
+    //         if (isColorChange) {
+    //             const [barOneIdx, barTwoIdx] = animations[i];
+    //             const barOneStyle = arrayBars[barOneIdx].style;
+    //             const barTwoStyle = arrayBars[barTwoIdx].style;
+    //             const color = i% 3 === 0 ? 'navy' : 'pink';
+    //             setTimeout(() => {
+    //                 barOneStyle.backgroundColor = color;
+    //                 barTwoStyle.backgroundColor = color; 
+    //             }, i * ANIMATION_SPEED_MS);
+    //         } else {
+    //             setTimeout(() => {
+    //                 const [barOneIdx, newHeight] = animations[i];
+    //                 const barOneStyle = arrayBars[barOneIdx].style;
+    //                 barOneStyle.height = `${newHeight}px`;
+    //             }, i * ANIMATION_SPEED_MS);
+    //         }
+    //     }
+    //  }
     
 
     heapSort() {}
@@ -124,11 +144,10 @@ export default class SortingVisualiser extends React.Component {
             // // console.log(javaScriptSort);
             // console.log(getQuickSortAnimations(array));
             const array= [2,4,2,5,8,5,2,5,8,4,2,15,78,4,27];
-            console.log(array)
+            //console.log(array)
             const javaScriptSortedArray = array.slice().sort((a,b) => a-b);
             console.log(javaScriptSortedArray);
             console.log(getQuickSortAnimations(array));
-
     }
     
 
