@@ -116,9 +116,11 @@ export function getQuickSortAnimations(array) {
   const leftArr = [];
   const rightArr = [];
   for (const el of array.slice(0, array.length-1)){
-    el < pivot ? leftArr.push(el) : rightArr.push(el);
-    animations.push(["comparision1",el,pivot]);
-    animations.push(["comparision2",el,pivot]); 
+    el <= pivot ? leftArr.push(el) : rightArr.push(el);
+    animations.push(["comparison1",el,pivot]);
+    animations.push(["comparison2",el,pivot]); 
+    //el > pivot ? animations.push(["swap",el,pivot]):animations.push(["swap",el,pivot]); 
+    
 }
 //   for (let i=0; array.length-1; i++){
 //     if (array[i] < pivot){
@@ -130,10 +132,13 @@ export function getQuickSortAnimations(array) {
 //     }
   
 
-  
-  //return [...getQuickSortAnimations(leftArr), pivot, ...getQuickSortAnimations(rightArr)];
-  return animations;
+  let sortArray= [...getQuickSortAnimations(leftArr), pivot, ...getQuickSortAnimations(rightArr)];
+  //return [[...getQuickSortAnimations(leftArr), pivot, ...getQuickSortAnimations(rightArr)], animations];
+  //return animations;
+  return [animations, sortArray];
+
 }
+
 
 
 // export function getQuickSortAnimations(array) {
