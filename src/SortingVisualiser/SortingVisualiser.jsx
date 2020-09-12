@@ -58,33 +58,31 @@ export default class SortingVisualiser extends React.Component {
     }
 
     quickSort() {
-        const animations = getQuickSortAnimations(this.state.array);
+        const [animations, array] = getQuickSortAnimations(this.state.array);
         for (let i = 0; i < animations.length; i++) {
-            const isColorChange = animations[i][0] === "comparision1" || animations[i][0] === "comparision2";
+            const isColorChange = animations[i][0] === "comparison1" || animations[i][0] === "comparison2";
             const arrayBars = document.getElementsByClassName('array-bar');
             if(isColorChange === true) {
-                const [comparision, barOneIndex, barTwoIndex] = animations[i];
-                const color = (animations[i][0] === "comparision1") ? 'navy' : 'pink';
-                const barOneStyle = arrayBars[barOneIndex].style;
-                const barTwoStyle = arrayBars[barTwoIndex].style;
+                const [comparison, barOneIndex, barTwoIndex] = animations[i];
+                const color = (animations[i][0] === "comparison1") ? 'navy' : 'pink';
+                const barOneStyle = arrayBars[barOneIndex]?arrayBars[barOneIndex].style: {};
+                const barTwoStyle = arrayBars[barTwoIndex]?arrayBars[barTwoIndex].style:{};
                 setTimeout(() => {
                     barOneStyle.backgroundColor = color;
                     barTwoStyle.backgroundColor = color;
                 },i * ANIMATION_SPEED_MS);
             } 
-            else {
-                const [barIndex, newHeight] = animations[i];
+            else { //This is the section that I am not sure about
+                const [swap, barIndex, newHeight] = array[i]; 
                 if (barIndex === -1) {
                     continue;
                 }
-                const barStyle = arrayBars[barIndex].style;
+                const barStyle = arrayBars[barIndex]?arrayBars[barIndex].style:{};
                 setTimeout(() => {
                     barStyle.height = `${newHeight}px`;
                 },i * ANIMATION_SPEED_MS);  
-            }        }
-        //this.setState({array: sortArray})
-        //const RESTORE_TIME = parseInt(ANIMATION_SPEED_MS*animations.length/2 + 3000);
-        //setTimeout(() => this.restoreStoreButtons(), RESTORE_TIME);  
+            }        
+        } 
         }
     
     
