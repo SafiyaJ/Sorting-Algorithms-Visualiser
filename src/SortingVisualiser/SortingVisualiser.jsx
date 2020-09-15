@@ -58,7 +58,7 @@ export default class SortingVisualiser extends React.Component {
     }
 
     quickSort() {
-        const [animations, array] = getQuickSortAnimations(this.state.array);
+        const [animations, array, swap] = getQuickSortAnimations(this.state.array);
         for (let i = 0; i < animations.length; i++) {
             const isColorChange = animations[i][0] === "comparison1" || animations[i][0] === "comparison2";
             const arrayBars = document.getElementsByClassName('array-bar');
@@ -72,17 +72,39 @@ export default class SortingVisualiser extends React.Component {
                     barTwoStyle.backgroundColor = color;
                 },i * ANIMATION_SPEED_MS);
             } 
-            else { //This is the section that I am not sure about
-                const [swap, barIndex, newHeight] = array[i]; 
-                if (barIndex === -1) {
-                    continue;
+            // else { //This is the section that I am not sure about
+            //     // const [swap, barIndex, newHeight] = array[i]; 
+            //     // if (barIndex === -1) {
+            //     //     continue;
+            //     // }
+            //     // const barStyle = arrayBars[barIndex]?arrayBars[barIndex].style:{};
+            //     // setTimeout(() => {
+            //     //     barStyle.height = `${newHeight}px`;
+            //     // },i * ANIMATION_SPEED_MS);  
+            //     setTimeout(() => {
+            //         const [barOneIdx, newHeight]= swap;
+            //         const barOneStyle = arrayBars[barOneIdx]?arrayBars[barOneIdx].style: {};
+            //         barOneStyle.height = `${newHeight}px`;
+            //     }, i * ANIMATION_SPEED_MS);
+            // }        
+
+            else {
+                for (let i = 0; i < animations.length; i++) {
+                    const barOneId= animations[i][1];
+                    const barTwoId= animations[i][2];
+                    if (barOneId > barTwoId) {
+                        const barOneStyles = arrayBars[barOneId]?arrayBars[barOneId].style: {};
+                        const barTwoStyles = arrayBars[barTwoStyles]?arrayBars[barTwoId].style: {};
+                        setTimeout(() => {
+                        [barOneStyles.height, barTwoStyles.height] = [
+                            barTwoStyles.height,
+                            barOneStyles.height
+                        ];
+                        }, i * ANIMATION_SPEED_MS);
+                    }
                 }
-                const barStyle = arrayBars[barIndex]?arrayBars[barIndex].style:{};
-                setTimeout(() => {
-                    barStyle.height = `${newHeight}px`;
-                },i * ANIMATION_SPEED_MS);  
-            }        
         } 
+    }
         }
     
     

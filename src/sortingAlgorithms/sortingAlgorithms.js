@@ -107,6 +107,8 @@ function doMerge(
 
 export function getQuickSortAnimations(array) {
   const animations = [];
+  const swap = [];
+
   if (array.length <= 1) {
     return array;
   }
@@ -116,9 +118,13 @@ export function getQuickSortAnimations(array) {
   const leftArr = [];
   const rightArr = [];
   for (const el of array.slice(0, array.length-1)){
-    el <= pivot ? leftArr.push(el) : rightArr.push(el);
+    el <= pivot ? leftArr.push(el) : rightArr.push(el) && swap.push([el,pivot]);
     animations.push(["comparison1",el,pivot]);
     animations.push(["comparison2",el,pivot]); 
+    //animations.push(["swap",el,pivot]); 
+    
+
+
     //el > pivot ? animations.push(["swap",el,pivot]):animations.push(["swap",el,pivot]); 
     
 }
@@ -135,7 +141,7 @@ export function getQuickSortAnimations(array) {
   let sortArray= [...getQuickSortAnimations(leftArr), pivot, ...getQuickSortAnimations(rightArr)];
   //return [[...getQuickSortAnimations(leftArr), pivot, ...getQuickSortAnimations(rightArr)], animations];
   //return animations;
-  return [animations, sortArray];
+  return [animations, sortArray, swap];
 
 }
 
